@@ -1,8 +1,18 @@
+/**
+  * @desc provides encode/decode functionality
+  * @author Vitaliy Sobur workslon@gmail.com
+*/
+
 'use strict';
 
+/**
+  * @param {string} input
+  * @param {string} password
+  * @return {string} output
+*/
 var code = function (input, password) {
-    var method          = (decodeURI(input) === input) ? 'encode' : 'decode',
-        input           = decodeURI(input),
+    var method          = (unescape(input) === input) ? 'encode' : 'decode',
+        input           = unescape(input),
         inputLength     = input.length,
         passLength      = password.length,
         inputCharCode   = 0,
@@ -22,7 +32,7 @@ var code = function (input, password) {
             charFromCode = String.fromCharCode(inputCharCode);
 
             if (method === 'encode') {
-                output.push(encodeURI(charFromCode));
+                output.push(escape(charFromCode));
             } else {
                 output.push(charFromCode);
             }
