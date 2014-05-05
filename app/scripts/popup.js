@@ -30,6 +30,14 @@ var Popup = (function () {
         },
 
         /**
+          * @desc set textarea input value
+          * @return {string} text
+        */
+        setText = function (text) {
+            textArea.value = text;
+        },
+
+        /**
           * @desc get all available form data
           * @return {object} data
         */
@@ -41,6 +49,24 @@ var Popup = (function () {
                 password    : password,
                 text        : text
             };
+        },
+
+        /**
+          * @desc save textarea input value to localStorage
+          * @return void
+        */
+        saveData = function () {
+            var data = getText();
+            window.localStorage.setItem('workslon.xor.input', data);
+        },
+
+        /**
+          * @desc restore textarea input value to localStorage
+          * @return void
+        */
+        restoreData = function () {
+            var data = window.localStorage.getItem('workslon.xor.input');
+            data && setText(data);
         },
 
         /**
@@ -89,20 +115,27 @@ var Popup = (function () {
 
             // select encoded/decoded content
             selectContent();
+
+            //save data
+            saveData();
         },
 
         /**
           * @desc text area input event handler
         */
         textAreaInputHandler = function () {
+            // change button wording
             var wording = getMethodName();
             changeBtnWording(wording);
+            saveData();
         },
 
         /**
           * @desc popup view initialization
         */
         init = (function () {
+            restoreData();
+            selectContent();
             button.addEventListener('click', btnClickHandler);
             textArea.addEventListener('input', textAreaInputHandler);
         })();
